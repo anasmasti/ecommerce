@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProductCardComponent } from '../shared/product-card/product-card.component';
 import { Product } from '../../types/Product';
 
@@ -10,14 +10,14 @@ import { Product } from '../../types/Product';
 })
 export class ProductListComponent {
   @Input() products!: Product[];
-  @Output() onAddToCart: EventEmitter<number> = new EventEmitter();
+  @Output() onAddToCart: EventEmitter<Product> = new EventEmitter();
 
   /**
    * Emits an event to add a product to the cart by its ID.
    *
-   * @param {number} productId - The ID of the product to add to the cart.
+   * @param {Product} product - The ID of the product to add to the cart.
    */
-  addToCart(productId: number) {
-    this.onAddToCart.emit(productId);
+  addToCart(product: Product) {
+    this.onAddToCart.emit(product);
   }
 }

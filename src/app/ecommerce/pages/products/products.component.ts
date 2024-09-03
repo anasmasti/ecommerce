@@ -5,6 +5,7 @@ import { ProductService } from './data-access/product.service';
 import { AsyncPipe } from '@angular/common';
 import { Product } from '../../types/Product';
 import { LoadingComponent } from '../../components/shared/loading/loading.component';
+import { CartService } from '../cart/data-access/cart.service';
 
 @Component({
   standalone: true,
@@ -14,6 +15,7 @@ import { LoadingComponent } from '../../components/shared/loading/loading.compon
 })
 export class ProductsPageComponent implements OnInit {
   private readonly _productService: ProductService = inject(ProductService);
+  private readonly _cartService: CartService = inject(CartService);
 
   products$!: Observable<Product[]>;
 
@@ -21,7 +23,9 @@ export class ProductsPageComponent implements OnInit {
     this.products$ = this.getProducts();
   }
 
-  addToCart(productId: number) {}
+  addToCart(product: Product) {
+    this._cartService.addToCart(product);
+  }
 
   private getProducts() {
     return this._productService.getProducts();
