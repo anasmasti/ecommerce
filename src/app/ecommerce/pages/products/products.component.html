@@ -1,0 +1,5 @@
+@if (products$ | async; as products) {
+  <app-product-list [products]="products" (onAddToCart)="addToCart($event)" />
+} @else {
+  <app-loading />
+}

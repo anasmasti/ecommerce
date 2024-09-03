@@ -1,0 +1,30 @@
+@keyframes loading-bars {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+.loading-bars div {
+  @apply absolute w-8 h-8 border-[3px] border-solid border-blue-400;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+.loading-bars div {
+  animation: loading-bars 1s linear infinite;
+  top: 100px;
+  left: 100px;
+}
+.loading-section {
+  @apply w-[200px] h-[200px] inline-block overflow-hidden;
+}
+.loading-bars {
+  @apply w-full h-full relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0;
+}
+.loading-bars div {
+  @apply box-content;
+}
