@@ -1,19 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartService } from './data-access/cart.service';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe, CurrencyPipe, NgIf } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  imports: [AsyncPipe, NgIf],
+  imports: [AsyncPipe, NgIf, CurrencyPipe],
 })
 export class CartComponent {
   private readonly _cartService: CartService = inject(CartService);
 
   cartItems$ = this._cartService.cartItems$;
-  total: Observable<number> = this._cartService.calculateTotal();
+  total$: Observable<number> = this._cartService.calculateTotal();
 
   increaseQuantity(productId: number): void {
     this._cartService.increaseQuantity(productId);

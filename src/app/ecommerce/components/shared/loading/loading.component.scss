@@ -7,7 +7,7 @@
   }
 }
 .loading-bars div {
-  @apply absolute w-8 h-8 border-[3px] border-solid border-blue-400;
+  @apply absolute w-8 h-8 border-[3px] border-solid border-gray-900;
   border-top-color: transparent;
   border-radius: 50%;
 }

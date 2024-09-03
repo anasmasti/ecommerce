@@ -1,5 +1,7 @@
-@for (product of products; track $index) {
-  <app-product-card [product]="product" (onAddToCart)="addToCart($event)" />
-} @empty {
-  No product available.
-}
+<div class="w-full flex flex-wrap">
+  @for (product of products; track $index) {
+    <app-card [product]="product" (onAddToCart)="addToCart($event)" />
+  } @empty {
+    No product available.
+  }
+</div>

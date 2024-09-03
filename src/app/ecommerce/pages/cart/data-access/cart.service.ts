@@ -10,6 +10,7 @@ import { Product } from '../../../types/Product';
 export class CartService {
   private readonly _cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   readonly cartItems$ = this._cartItemsSubject.asObservable();
+  readonly cartItemCount$ = this.cartItems$.pipe(map(items => items.length));
 
   /**
    * Adds a product to the cart or updates the quantity if it already exists.
