@@ -26,50 +26,6 @@ export class CartPageComponent {
    * @throws {Error} If productId is not provided for operations other than clearing the cart.
    */
   handleCartEvents(event: CartEventPayload): void {
-    const { productId, event: cartEvent } = event;
-
-    if (
-      cartEvent !== this.CART_EVENTS.CLEAR &&
-      typeof productId === 'undefined'
-    ) {
-      throw new Error('Product ID is required for this operation.');
-    }
-
-    switch (cartEvent) {
-      case this.CART_EVENTS.DECREASE:
-        this._decreaseQuantity(productId!);
-        break;
-
-      case this.CART_EVENTS.INCREASE:
-        this._increaseQuantity(productId!);
-        break;
-
-      case this.CART_EVENTS.REMOVE:
-        this._removeFromCart(productId!);
-        break;
-
-      case this.CART_EVENTS.CLEAR:
-        this._clearCart();
-        break;
-
-      default:
-        throw new Error('Unhandled cart event.');
-    }
-  }
-
-  private _increaseQuantity(productId: number): void {
-    this._cartService.increaseQuantity(productId);
-  }
-
-  private _decreaseQuantity(productId: number): void {
-    this._cartService.decreaseQuantity(productId);
-  }
-
-  private _removeFromCart(productId: number): void {
-    this._cartService.removeFromCart(productId);
-  }
-
-  private _clearCart(): void {
-    this._cartService.clearCart();
+    this._cartService.handleCartEvents(event);
   }
 }

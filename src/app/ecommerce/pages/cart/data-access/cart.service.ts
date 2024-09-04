@@ -3,6 +3,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Product } from '../../../shared/types/Product.type';
 import { CartItem } from '../types/CartItem.type';
+import { CART_EVENTS } from '../enums/CartEvents.enum';
+import { CartEventPayload } from '../types/CartEvent.type';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +43,7 @@ export class CartService {
    *
    * @param {number} productId - The ID of the product to increase quantity for.
    */
-  increaseQuantity(productId: number): void {
+  private _increaseQuantity(productId: number): void {
     const currentCart = this._cartItemsSubject$.getValue();
     const itemIndex = currentCart.findIndex(
       item => item.product.id === productId
@@ -61,7 +63,7 @@ export class CartService {
    *
    * @param {number} productId - The ID of the product to decrease quantity for.
    */
-  decreaseQuantity(productId: number): void {
+  private _decreaseQuantity(productId: number): void {
     const currentCart = this._cartItemsSubject$.getValue();
     const itemIndex = currentCart.findIndex(
       item => item.product.id === productId
@@ -75,7 +77,7 @@ export class CartService {
         );
         this._cartItemsSubject$.next(updatedCartItems);
       } else {
-        this.removeFromCart(productId);
+        this._removeFromCart(productId);
       }
     }
   }
@@ -85,7 +87,7 @@ export class CartService {
    *
    * @param {number} productId - The ID of the product to remove from the cart.
    */
-  removeFromCart(productId: number): void {
+  private _removeFromCart(productId: number): void {
     const updatedCartItems = this._cartItemsSubject$
       .getValue()
       .filter(item => item.product.id !== productId);
@@ -95,7 +97,7 @@ export class CartService {
   /**
    * Clears all items from the cart.
    */
-  clearCart(): void {
+  private _clearCart(): void {
     this._cartItemsSubject$.next([]);
   }
 
@@ -113,5 +115,40 @@ export class CartService {
         )
       )
     );
+  }
+
+  /**
+   * Handles various cart events such as adding, removing, or updating the quantity of a product.
+   *
+   * @param {CartEventPayload} event - The event payload containing product ID and event type.
+   * @throws {Error} If productId is not provided for operations other than clearing the cart.
+   */
+  handleCartEvents(event: CartEventPayload): void {
+    const { productId, event: cartEvent } = event;
+
+    if (cartEvent !== CART_EVENTS.CLEAR && typeof productId === 'undefined') {
+      throw new Error('Product ID is required for this operation.');
+    }
+
+    switch (cartEvent) {
+      case CART_EVENTS.DECREASE:
+        this._decreaseQuantity(productId!);
+        break;
+
+      case CART_EVENTS.INCREASE:
+        this._increaseQuantity(productId!);
+        break;
+
+      case CART_EVENTS.REMOVE:
+        this._removeFromCart(productId!);
+        break;
+
+      case CART_EVENTS.CLEAR:
+        this._clearCart();
+        break;
+
+      default:
+        throw new Error('Unhandled cart event.');
+    }
   }
 }
