@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Product } from '../../../../types/Product.type';
+import { Product } from '../../../../shared/types/Product.type';
 
 @Component({
   standalone: true,

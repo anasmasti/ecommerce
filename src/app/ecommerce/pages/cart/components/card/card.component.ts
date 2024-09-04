@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { CartItem } from '../../../../types/CartItem.type';
 import { CART_EVENTS } from '../../enums/CartEvents.enum';
 import { CartEventPayload } from '../../types/CartEvent.type';
+import { CartItem } from '../../types/CartItem.type';
 
 @Component({
   standalone: true,

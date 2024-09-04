@@ -1,7 +1,7 @@
-<div class="w-full flex flex-wrap">
+<div class="w-full flex gap-3 flex-wrap px-14 mt-5">
   @for (product of products; track $index) {
-    <app-product-card [product]="product" (onAddToCart)="addToCart($event)" />
+  <app-product-card [product]="product" (onAddToCart)="addToCart($event)" />
   } @empty {
-    No product available.
+  No product available.
   }
 </div>
