@@ -27,7 +27,7 @@ This project is an e-commerce web application built with Angular. It allows cust
 
 ### User Story 3: Product Details
 
-- Users can click on a product to view detailed information, including an extended description and additional product images.
+- Users can click on a product to view detailed information.
 
 ## Installation
 
@@ -53,9 +53,7 @@ Run npm start to launch a development server. Navigate to http://localhost:4200/
  npm start
 ```
 
-## Development Server
-
-Code Scaffolding
+## Code Scaffolding
 
 Use the Angular CLI to generate new components, directives, pipes, services, classes, guards, interfaces, enums, or modules.
 
