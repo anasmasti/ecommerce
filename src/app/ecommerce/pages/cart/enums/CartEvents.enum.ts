@@ -1,0 +1,6 @@
+export const CART_EVENTS = {
+  INCREASE: 'INCREASE',
+  DECREASE: 'DECREASE',
+  REMOVE: 'REMOVE',
+  CLEAR: 'CLEAR',
+} as const;

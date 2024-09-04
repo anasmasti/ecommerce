@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../../pages/cart/data-access/cart.service';
-import { map } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({

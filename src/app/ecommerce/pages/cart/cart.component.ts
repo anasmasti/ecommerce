@@ -2,28 +2,75 @@ import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartService } from './data-access/cart.service';
 import { AsyncPipe, CurrencyPipe, NgIf } from '@angular/common';
+import { CartEventPayload } from './types/CartEvent.type';
+import { CART_EVENTS } from './enums/CartEvents.enum';
+import { CartItemCardComponent } from './components/card/card.component';
 
 @Component({
   standalone: true,
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  imports: [AsyncPipe, NgIf, CurrencyPipe],
+  imports: [AsyncPipe, NgIf, CurrencyPipe, CartItemCardComponent],
 })
 export class CartComponent {
   private readonly _cartService: CartService = inject(CartService);
 
-  cartItems$ = this._cartService.cartItems$;
-  total$: Observable<number> = this._cartService.calculateTotal();
+  readonly cartItems$ = this._cartService.cartItems$;
+  readonly total$: Observable<number> = this._cartService.calculateTotal();
+  readonly CART_EVENTS = CART_EVENTS;
 
-  increaseQuantity(productId: number): void {
+  handleCartEvents(event: CartEventPayload): void {
+    const { productId, event: cartEvent } = event;
+
+    if (
+      cartEvent !== this.CART_EVENTS.CLEAR &&
+      typeof productId === 'undefined'
+    ) {
+      throw new Error('Product ID is required for this operation.');
+    }
+
+    switch (cartEvent) {
+      case this.CART_EVENTS.DECREASE:
+        this._decreaseQuantity(productId!);
+        break;
+
+      case this.CART_EVENTS.INCREASE:
+        this._increaseQuantity(productId!);
+        break;
+
+      case this.CART_EVENTS.REMOVE:
+        this._removeFromCart(productId!);
+        break;
+
+      case this.CART_EVENTS.CLEAR:
+        this._clearCart();
+        break;
+
+      default:
+        throw new Error('Unhandled cart event.');
+    }
+  }
+
+  private _increaseQuantity(productId: number): void {
     this._cartService.increaseQuantity(productId);
   }
 
-  decreaseQuantity(productId: number): void {
+  private _decreaseQuantity(productId: number): void {
     this._cartService.decreaseQuantity(productId);
   }
 
-  removeFromCart(productId: number): void {
+  private _removeFromCart(productId: number): void {
     this._cartService.removeFromCart(productId);
+  }
+
+  private _clearCart(): void {
+    this._cartService.clearCart();
+  }
+
+  private _getValidatedProductId(productId?: number): number {
+    if (typeof productId === 'undefined') {
+      throw new Error('Product ID is required for this operation.');
+    }
+    return productId;
   }
 }
