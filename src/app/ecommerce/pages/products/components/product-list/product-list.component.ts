@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ProductCardComponent } from './components/card/card.component';
-import { Product } from '../../types/Product';
+import { Product } from '../../../../types/Product.type';
+import { ProductCardComponent } from '../card/card.component';
 
 @Component({
   standalone: true,

@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://fakestoreapi.com',
+  API_URL: 'https://fakestoreapi.com',
+  PRODUCT_ENDPOINT: 'products',
 };

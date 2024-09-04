@@ -7,17 +7,18 @@ import { Product } from '../../../types/Product.type';
 @Injectable({
   providedIn: 'root',
 })
-export class ProductService {
+export class ProductDetailsService {
   private readonly _http: HttpClient = inject(HttpClient);
 
   /**
-   * Fetches the list of products from the API.
+   * Fetches product details by product ID.
    *
-   * @returns {Observable<Product[]>} An observable that emits the list of products.
+   * @param {number} productId - The ID of the product to fetch.
+   * @returns {Observable<Product>} An observable containing the product details.
    */
-  getProducts(): Observable<Product[]> {
-    return this._http.get<Product[]>(
-      `${environment.API_URL}/${environment.PRODUCT_ENDPOINT}`
+  getProductById(productId: number): Observable<Product> {
+    return this._http.get<Product>(
+      `${environment.API_URL}/${environment.PRODUCT_ENDPOINT}/${productId}`
     );
   }
 }

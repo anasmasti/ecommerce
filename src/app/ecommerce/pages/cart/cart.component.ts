@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartService } from './data-access/cart.service';
-import { AsyncPipe, CurrencyPipe, NgIf } from '@angular/common';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { CartEventPayload } from './types/CartEvent.type';
 import { CART_EVENTS } from './enums/CartEvents.enum';
 import { CartItemCardComponent } from './components/card/card.component';
@@ -10,15 +10,21 @@ import { CartItemCardComponent } from './components/card/card.component';
   standalone: true,
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  imports: [AsyncPipe, NgIf, CurrencyPipe, CartItemCardComponent],
+  imports: [AsyncPipe, CurrencyPipe, CartItemCardComponent],
 })
-export class CartComponent {
+export class CartPageComponent {
   private readonly _cartService: CartService = inject(CartService);
 
   readonly cartItems$ = this._cartService.cartItems$;
   readonly total$: Observable<number> = this._cartService.calculateTotal();
   readonly CART_EVENTS = CART_EVENTS;
 
+  /**
+   * Handles various cart events such as adding, removing, or updating the quantity of a product.
+   *
+   * @param {CartEventPayload} event - The event payload containing product ID and event type.
+   * @throws {Error} If productId is not provided for operations other than clearing the cart.
+   */
   handleCartEvents(event: CartEventPayload): void {
     const { productId, event: cartEvent } = event;
 
@@ -65,12 +71,5 @@ export class CartComponent {
 
   private _clearCart(): void {
     this._cartService.clearCart();
-  }
-
-  private _getValidatedProductId(productId?: number): number {
-    if (typeof productId === 'undefined') {
-      throw new Error('Product ID is required for this operation.');
-    }
-    return productId;
   }
 }

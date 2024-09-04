@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product } from '../../../../types/Product';
 import { CurrencyPipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Product } from '../../../../types/Product.type';
 
 @Component({
   standalone: true,
   selector: 'app-product-card',
   templateUrl: './card.component.html',
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, RouterModule],
 })
 export class ProductCardComponent {
   @Input() product!: Product;

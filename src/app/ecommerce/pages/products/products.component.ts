@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ProductListComponent } from '../../components/product-list/product-list.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
 import { Observable } from 'rxjs';
 import { ProductService } from './data-access/product.service';
 import { AsyncPipe } from '@angular/common';
-import { Product } from '../../types/Product';
+import { Product } from '../../types/Product.type';
 import { LoadingComponent } from '../../components/shared/loading/loading.component';
 import { CartService } from '../cart/data-access/cart.service';
 
